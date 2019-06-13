@@ -1,4 +1,4 @@
-demo主要参考http://www.ityouknow.com/spring-cloud.html（纯洁的微笑博客）
+demo主要参考http://www.ityouknow.com/spring-cloud.html （纯洁的微笑博客）
 
 eureka server1端口=8000
 eureka server2端口=8001
