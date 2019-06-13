@@ -4,7 +4,6 @@ eureka provider1端口=9000
 eureka provider2端口=9001
 eureka consumer1端口=9006
 eureka consumer2端口=9008
-config端口 = 8010
-config client端口= 8016
-
+config端口=8010
+config client端口=8016
 zuul网关端口=8020
