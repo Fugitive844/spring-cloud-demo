@@ -24,6 +24,10 @@
         <module>test</module>
         <module>spring-cloud-config</module>
         <module>spring-cloud-config-client</module>
+        <module>spring-cloud-zuul1</module>
+        <module>spring-cloud-eureka-turbine1</module>
+        <module>spring-cloud-zipkin-server</module>
+
     </modules>
 
     <properties>

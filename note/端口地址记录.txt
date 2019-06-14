@@ -7,3 +7,4 @@ eureka consumer2端口=9008
 config端口=8010
 config client端口=8016
 zuul网关端口=8020
+zipkin-server端口=8030

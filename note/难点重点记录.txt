@@ -93,3 +93,49 @@ public class TestFilter extends ZuulFilter {
             return new TestFilter();
         }
 
+     过滤器可以决定是否对请求进行路由
+       RequestContext ctx = RequestContext.getCurrentContext();
+             HttpServletRequest request = ctx.getRequest();
+               ctx.setSendZuulResponse(false); //不对其进行路由
+                         ctx.setResponseStatusCode(400);
+                         ctx.setResponseBody("token is empty");
+                         ctx.set("isSuccess", false);
+      以上代码中，ctx.setSendZuulResponse(false)表示不路由，true时需要路由。
+      ctx.setResponseBody("token is empty");不要路由时，通过setResponseBody给返回请求信息
+
+12.zuul网关路由熔断
+
+当我们的后端服务出现异常的时候，我们不希望将异常抛出给最外层，期望服务可以自动进行一降级。Zuul给我们提供了这样的支持。当某个服务出现异常时，直接返回我们预设的信息。
+
+我们通过自定义的fallback方法，并且将其指定给某个route来实现该route访问出问题的熔断处理。主要继承ZuulFallbackProvider接口来实现，ZuulFallbackProvider默认有两个方法，一个用来指明熔断拦截哪个服务，一个定制返回内容。
+
+public interface ZuulFallbackProvider {
+   /**
+	 * The route this fallback will be used for.
+	 * @return The route the fallback will be used for.
+	 */
+	public String getRoute();
+
+	/**
+	 * Provides a fallback response.
+	 * @return The fallback response.
+	 */
+	public ClientHttpResponse fallbackResponse();
+}
+实现类通过实现getRoute方法，告诉Zuul它是负责哪个route定义的熔断。而fallbackResponse方法则是告诉 Zuul 断路出现时，它会提供一个什么返回值来处理请求。
+
+后来Spring又扩展了此类，丰富了返回方式，在返回的内容中添加了异常信息，因此最新版本建议直接继承类FallbackProvider 。
+
+我们以上面的spring-cloud-producer服务为例，定制它的熔断返回内容。
+实现类加入注解@Component，getRoute()方法返回服务名，也是服务提供者的spring.application.name.  fallbackResponse是处理发生异常时的返回数据。
+
+13.zuul网关路由重试
+在配置文件中配置启用Zuul Retry
+#是否开启重试功能
+zuul.retryable=true
+#对当前服务的重试次数
+ribbon.MaxAutoRetries=2
+#切换相同Server的次数
+ribbon.MaxAutoRetriesNextServer=0
+这样我们就开启了Zuul的重试功能。
+
