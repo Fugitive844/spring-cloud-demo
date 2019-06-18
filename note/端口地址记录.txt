@@ -8,3 +8,4 @@ config端口=8010
 config client端口=8016
 zuul网关端口=8020
 zipkin-server端口=8030
+zipkin-server（官方版）端口=9411

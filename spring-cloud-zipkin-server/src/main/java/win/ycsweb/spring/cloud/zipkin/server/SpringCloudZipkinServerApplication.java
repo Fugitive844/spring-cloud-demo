@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import zipkin2.server.internal.EnableZipkinServer;
 
-@SpringBootApplication
+/*@SpringBootApplication
 @EnableEurekaClient
-@EnableZipkinServer
+@EnableZipkinServer*/
 public class SpringCloudZipkinServerApplication {
 
     public static void main(String[] args) {
